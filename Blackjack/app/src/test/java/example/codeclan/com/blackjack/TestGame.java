@@ -25,8 +25,6 @@ public class TestGame {
         game = new Game(player, dealer, deck);
     }
 
-
-
     @Test
     public void TestDealerHasAce(){
         dealer.cards.add(new Card(Suit.CLUBS, Rank.ACE));
