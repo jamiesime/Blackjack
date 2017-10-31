@@ -5,4 +5,12 @@ package example.codeclan.com.blackjack;
  */
 
 public class Runner {
+
+    public static void main(String[] args){
+        Deck deck = new Deck();
+        Player player = new Player("Homestar");
+        Dealer dealer = new Dealer("Gregorio", deck);
+        Game game = new Game(player, dealer, deck);
+    }
+
 }

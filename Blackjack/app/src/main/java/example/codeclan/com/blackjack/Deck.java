@@ -10,7 +10,7 @@ import java.util.Collections;
 
 public class Deck {
 
-    ArrayList<Card> cards;
+    private ArrayList<Card> cards;
 
     public Deck() {
         cards = new ArrayList<Card>();
@@ -32,4 +32,5 @@ public class Deck {
     public Card removeFirstCard(){
         return cards.remove(0);
     }
+
 }
