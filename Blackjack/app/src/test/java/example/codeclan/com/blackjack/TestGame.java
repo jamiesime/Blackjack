@@ -36,12 +36,32 @@ public class TestGame {
     }
 
     @Test
-    public void TestDealerMakesDecision(){
+    public void TestDealerTwists(){
         dealer.cards.add(new Card(Suit.CLUBS, Rank.ACE));
         dealer.cards.add(new Card(Suit.CLUBS, Rank.ACE));
         dealer.cards.add(new Card(Suit.CLUBS, Rank.THREE));
         int choice = dealer.decision(true);
         assertEquals(2, choice);
     }
+
+    @Test
+    public void TestDealerBusts(){
+        dealer.cards.add(new Card(Suit.CLUBS, Rank.ACE));
+        dealer.cards.add(new Card(Suit.CLUBS, Rank.THREE));
+        dealer.cards.add(new Card(Suit.CLUBS, Rank.TEN));
+        dealer.cards.add(new Card(Suit.DIAMONDS, Rank.TEN));
+        int choice = dealer.decision(true);
+        assertEquals(3, choice);
+    }
+
+    @Test
+    public void TestDealerSticks(){
+        dealer.cards.add(new Card(Suit.CLUBS, Rank.ACE));
+        dealer.cards.add(new Card(Suit.CLUBS, Rank.TEN));
+        dealer.cards.add(new Card(Suit.DIAMONDS, Rank.TEN));
+        int choice = dealer.decision(true);
+        assertEquals(1, choice);
+    }
+
 
 }
