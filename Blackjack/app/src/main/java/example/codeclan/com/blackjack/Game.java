@@ -30,7 +30,10 @@ public class Game {
             displayHand();
             playerMove();
             dealerTurn();
+            revealHands();
+            compareHands();
         }
+        startAgain();
     }
 
     public void startRound(){
@@ -46,7 +49,13 @@ public class Game {
         for (Card card : player.getCards()){
             System.out.println(card.getRank() + " of " + card.getSuit());
         }
-        System.out.println("To stick, enter 1. To twist, enter 2.");
+            if (player.handTotal() < 21) {
+                System.out.println("To twist, enter 1. To stick, enter anything else.");
+            }
+            else{
+                System.out.println("You went bust! You lose!");
+                startAgain();
+            }
         }
 
 
@@ -55,14 +64,11 @@ public class Game {
         Scanner scan = new Scanner(System.in);
         int input = scan.nextInt();
         if (input == 1){
-            playerStick();
-        }
-        if (input == 2){
+            System.out.println("Dealing new card...");
             playerTwist();
         }
-        else {
-            System.out.println("Invalid choice.");
-            System.out.println("To stick, enter 1. To twist, enter 2.");
+        if (input == 2){
+            playerStick();
         }
     }
 
@@ -73,6 +79,7 @@ public class Game {
     public void playerTwist(){
         player.takeCard(dealer.deal());
         displayHand();
+        playerMove();
     }
 
     public void dealerTurn(){
@@ -82,8 +89,76 @@ public class Game {
         }
         else if (choice == 2) {
             System.out.println("The dealer will twist!");
+            dealerTwist();
+        }
+        else if (choice == 3){
+            System.out.println("The dealer went bust! They lose! So, you win!");
+            revealHands();
+            startAgain();
         }
     }
+
+    public void dealerTwist(){
+        dealer.takeCard(dealer.deal());
+        dealerTurn();
+    }
+
+    public void revealHands(){
+        System.out.println("The dealer's hand:");
+        for (Card card : dealer.getCards()){
+            System.out.println(card.getRank() + " of " + card.getSuit());
+        }
+        System.out.println("DEALER HAND VALUE: " + dealer.handTotal());
+        System.out.println("YOUR HAND VALUE: " + player.handTotal());
+    }
+
+    public boolean compareHands(){
+        if (player.handTotal() > dealer.handTotal()){
+            System.out.println("You won!");
+        }
+        if (dealer.handTotal() > player.handTotal()){
+            System.out.println("You lost...");
+        }
+        if (player.handTotal() == dealer.handTotal()){
+            System.out.println("Draw! Which means the dealer wins. Accept the rules or leave.");
+
+        }
+        return gameOver = true;
+    }
+
+    public void startAgain(){
+        System.out.println("What an exciting game of chance. Play again?");
+        Scanner scan = new Scanner(System.in);
+        int input = scan.nextInt();
+        if (input == 1){
+            gameOver = false;
+            resetGame();
+        }
+        if (input == 2){
+            System.out.println("A bad choice. See you next time.");
+            quit();
+        }
+        else {
+            System.out.println("Invalid choice. I will assume that means you want to play again.");
+            gameOver = false;
+            resetGame();
+        }
+
+    }
+
+    public void resetGame(){
+        player.emptyHand();
+        dealer.emptyHand();
+        deck.emptyDeck();
+        deck.generateDeck();
+        deck.shuffle();
+        gameStart();
+    }
+
+    public void quit(){
+        System.exit(0);
+    }
+
 
 
 }

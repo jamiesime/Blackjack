@@ -27,6 +27,9 @@ public class Dealer extends Player {
         for (Card card : this.cards){
             handTotal += card.getRank().getValue();
         }
+        if (handTotal > 21){
+            return 3;
+        }
         if (handTotal < 16){
             return 2;
         }

@@ -28,6 +28,18 @@ public class Player {
         cards.add(card);
     }
 
+    public int handTotal(){
+        int handTotal = 0;
+        for (Card card : cards){
+            handTotal += card.getRank().getValue();
+        }
+        return handTotal;
+    }
+
+    public void emptyHand(){
+        cards.clear();
+    }
+
 
 
 
