@@ -3,6 +3,8 @@ package example.codeclan.com.blackjack;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import static android.R.attr.checked;
+
 /**
  * Created by user on 31/10/2017.
  */
@@ -53,8 +55,15 @@ public class Game {
                 System.out.println("To twist, enter 1. To stick, enter anything else.");
             }
             else{
-                System.out.println("You went bust! You lose!");
-                startAgain();
+                boolean hasAce = checkForAce(player);
+                if (hasAce){
+                    System.out.println("Ace goes low!");
+                    System.out.println("To twist, enter 1. To stick, enter anything else.");
+                }
+                else {
+                    System.out.println("You went bust! You lose!");
+                    startAgain();
+                }
             }
         }
 
@@ -83,7 +92,8 @@ public class Game {
     }
 
     public void dealerTurn(){
-        int choice = dealer.decision();
+        int choice = 0;
+        choice = dealer.decision(checkForAce(dealer));
         if (choice == 1) {
             System.out.println("The dealer is sticking.");
         }
@@ -92,9 +102,9 @@ public class Game {
             dealerTwist();
         }
         else if (choice == 3){
-            System.out.println("The dealer went bust! They lose! So, you win!");
-            revealHands();
-            startAgain();
+                System.out.println("The dealer went bust! They lose! So, you win!");
+                revealHands();
+                startAgain();
         }
     }
 
@@ -124,6 +134,16 @@ public class Game {
 
         }
         return gameOver = true;
+    }
+
+    public boolean checkForAce(Player current){
+        ArrayList<Card> hand = current.getCards();
+        for (Card card : hand) {
+            if (card.getRank().getName() == "Ace") {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void startAgain(){

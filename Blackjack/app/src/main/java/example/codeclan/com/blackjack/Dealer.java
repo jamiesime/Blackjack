@@ -22,10 +22,13 @@ public class Dealer extends Player {
         this.deck.shuffle();
     }
 
-    public int decision(){
+    public int decision(boolean hasAce){
         int handTotal = 0;
         for (Card card : this.cards){
             handTotal += card.getRank().getValue();
+        }
+        if (hasAce) {
+            aceModifier(handTotal);
         }
         if (handTotal > 21){
             return 3;
@@ -35,6 +38,15 @@ public class Dealer extends Player {
         }
         else {
             return 1;
+        }
+    }
+
+    public void aceModifier(int handTotal){
+        if (handTotal > 11){
+            handTotal -= 10;
+        }
+        if (handTotal <= 11){
+            handTotal += 10;
         }
     }
 }
