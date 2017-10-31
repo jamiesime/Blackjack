@@ -21,4 +21,17 @@ public class Dealer extends Player {
     public void shuffle(){
         this.deck.shuffle();
     }
+
+    public int decision(){
+        int handTotal = 0;
+        for (Card card : this.cards){
+            handTotal += card.getRank().getValue();
+        }
+        if (handTotal < 16){
+            return 2;
+        }
+        else {
+            return 1;
+        }
+    }
 }

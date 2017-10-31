@@ -11,6 +11,7 @@ public class Runner {
         Player player = new Player("Homestar");
         Dealer dealer = new Dealer("Gregorio", deck);
         Game game = new Game(player, dealer, deck);
+        game.gameStart();
     }
 
 }
